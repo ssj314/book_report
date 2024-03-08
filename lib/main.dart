@@ -107,40 +107,40 @@ class MainPage extends StatelessWidget {
             return Scaffold(
                 backgroundColor: Theme.of(context).colorScheme.background,
                 body: Obx(() => mainPageController.getPage()),
-                bottomNavigationBar: Container(
-                    padding: EdgeInsets.only(bottom: getBottomSpacing()),
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.secondaryContainer,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(CustomRadius.corner.radius),
-                            topRight: Radius.circular(CustomRadius.corner.radius)
-                        )
-                    ),
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(CustomRadius.corner.radius),
-                            topRight: Radius.circular(CustomRadius.corner.radius)
-                        ),
-                        child: Theme(
-                            data: Theme.of(context).copyWith(
-                                splashColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                splashFactory: NoSplash.splashFactory
-                            ),
-                            child: Obx(() => BottomNavigationBar(
-                                items: mainPageController.getNavigationItems(),
-                                currentIndex: mainPageController.pageIndex.value,
-                                onTap: (value) => mainPageController.setPageIndex(value),
-                                backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-                                selectedItemColor: Theme.of(context).colorScheme.primary,
-                                unselectedItemColor: Theme.of(context).colorScheme.outline,
-                                unselectedFontSize: CustomFont.small.size,
-                                selectedFontSize: CustomFont.small.size
-                            ))
-                        )
-                    )
-                )
+                // bottomNavigationBar: Container(
+                //     padding: EdgeInsets.only(bottom: getBottomSpacing()),
+                //     decoration: BoxDecoration(
+                //         color: Theme.of(context).colorScheme.secondaryContainer,
+                //         borderRadius: BorderRadius.only(
+                //             topLeft: Radius.circular(CustomRadius.corner.radius),
+                //             topRight: Radius.circular(CustomRadius.corner.radius)
+                //         )
+                //     ),
+                //     child: ClipRRect(
+                //         borderRadius: BorderRadius.only(
+                //             topLeft: Radius.circular(CustomRadius.corner.radius),
+                //             topRight: Radius.circular(CustomRadius.corner.radius)
+                //         ),
+                //         child: Theme(
+                //             data: Theme.of(context).copyWith(
+                //                 splashColor: Colors.transparent,
+                //                 highlightColor: Colors.transparent,
+                //                 hoverColor: Colors.transparent,
+                //                 splashFactory: NoSplash.splashFactory
+                //             ),
+                //             child: Obx(() => BottomNavigationBar(
+                //                 items: mainPageController.getNavigationItems(),
+                //                 currentIndex: mainPageController.pageIndex.value,
+                //                 onTap: (value) => mainPageController.setPageIndex(value),
+                //                 backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+                //                 selectedItemColor: Theme.of(context).colorScheme.primary,
+                //                 unselectedItemColor: Theme.of(context).colorScheme.outline,
+                //                 unselectedFontSize: CustomFont.small.size,
+                //                 selectedFontSize: CustomFont.small.size
+                //             ))
+                //         )
+                //     )
+                // )
             );
           } else {
             return SignInPage();

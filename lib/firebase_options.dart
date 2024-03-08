@@ -58,6 +58,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '465755278038',
     projectId: 'ehrgnrka-c66a8',
     authDomain: 'ehrgnrka-c66a8.firebaseapp.com',
+    databaseURL: 'https://ehrgnrka-c66a8-default-rtdb.firebaseio.com',
     storageBucket: 'ehrgnrka-c66a8.appspot.com',
   );
 }

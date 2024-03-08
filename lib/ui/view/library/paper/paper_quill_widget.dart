@@ -6,25 +6,15 @@ import 'package:get/get.dart';
 import '../../../../constant/values.dart';
 
 class QuillTools {
-  final controller = Get.find<PaperEditController>();
 
   getBottomTool() {
-    return QuillToolbar.simple(
-      configurations: QuillSimpleToolbarConfigurations(
-        controller: controller.getQuillController(),
-        sharedConfigurations: const QuillSharedConfigurations(locale: Locale("ko")),
+    return QuillToolbar(
+      configurations: QuillToolbarConfigurations(
         multiRowsDisplay: true,
         fontSizesValues: {
           "Small": '${CustomFont.caption.size}',
           "Medium": '${CustomFont.body.size}',
           "Large": '${CustomFont.title.size}',
-        },
-        fontFamilyValues: const {
-          "기본": 'LINE',
-          "교보 손글씨체": 'KYOBO',
-          "영덕 바다체": 'YEONGDEOK',
-          "꿈누리터 모두체": 'MODU',
-          "꿈누리터 꿈체": 'DREAM'
         },
         showDividers: false,
         showClearFormat: false,

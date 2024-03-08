@@ -201,6 +201,8 @@ class PaperToolBar extends StatelessWidget {
   final controller = Get.find<PaperEditController>();
   final imageController = Get.find<ImageController>();
   final userController = Get.find<UserController>();
+  final qController = Get.find<PaperEditController>();
+
   PaperToolBar({super.key});
 
   @override
@@ -255,7 +257,12 @@ class PaperToolBar extends StatelessWidget {
                   Expanded(child: SingleChildScrollView(
                       controller: ScrollController(),
                       scrollDirection: Axis.horizontal,
-                      child: QuillTools().getBottomTool()
+                      child: QuillProvider(
+                        configurations: QuillConfigurations(
+                          controller: qController.getQuillController()
+                        ),
+                        child: QuillTools().getBottomTool(),
+                      )
                   ))
                 ]
             )
@@ -683,29 +690,33 @@ class PaperCommentEditor extends StatelessWidget {
 
   _quillEditor(QuillController comment) {
     final brightness = Get.mediaQuery.platformBrightness;
-    return QuillEditor.basic(
-        scrollController: ScrollController(),
-        configurations: QuillEditorConfigurations(
-            placeholder: "",
-
-            controller: comment,
-            readOnly: !controller.isEditMode(),
-            scrollable: false,
-            padding: EdgeInsets.zero,
-            autoFocus: false,
-            showCursor: controller.isEditMode(),
-            expands: false,
-            minHeight: controller.isEditMode()?120:null,
-            customStyles: DefaultStyles(
-                paragraph: DefaultTextBlockStyle(
-                    TextStyle(
-                        color: (brightness == Brightness.light)?Colors.black:Colors.white,
-                        fontSize: CustomFont.body.size,
-                        fontFamily: "LINE"
-                    ),
-                    const VerticalSpacing(0, 0),
-                    const VerticalSpacing(0, 0),
-                    null
+    return QuillProvider(
+        configurations: QuillConfigurations(
+          controller: comment,
+          sharedConfigurations: const QuillSharedConfigurations()
+        ),
+        child: QuillEditor.basic(
+            scrollController: ScrollController(),
+            configurations: QuillEditorConfigurations(
+                placeholder: "",
+                readOnly: !controller.isEditMode(),
+                scrollable: false,
+                padding: EdgeInsets.zero,
+                autoFocus: false,
+                showCursor: controller.isEditMode(),
+                expands: false,
+                minHeight: controller.isEditMode()?120:null,
+                customStyles: DefaultStyles(
+                    paragraph: DefaultTextBlockStyle(
+                        TextStyle(
+                            color: (brightness == Brightness.light)?Colors.black:Colors.white,
+                            fontSize: CustomFont.body.size,
+                            fontFamily: "LINE"
+                        ),
+                        const VerticalSpacing(0, 0),
+                        const VerticalSpacing(0, 0),
+                        null
+                    )
                 )
             )
         )
@@ -760,10 +771,13 @@ class PaperSummaryEditor extends StatelessWidget {
 
   _quillEditor(QuillController summary) {
     final brightness = Get.mediaQuery.platformBrightness;
-    return QuillEditor.basic(
+    return QuillProvider(
+        configurations: QuillConfigurations(
+        controller: summary,
+        sharedConfigurations: const QuillSharedConfigurations()
+    ), child: QuillEditor.basic(
       scrollController: ScrollController(),
         configurations: QuillEditorConfigurations(
-            controller: summary,
             readOnly: !controller.isEditMode(),
             placeholder: "",
             scrollable: true,
@@ -785,7 +799,7 @@ class PaperSummaryEditor extends StatelessWidget {
                     null
                 )
             )
-        )
+        ))
     );
   }
 }

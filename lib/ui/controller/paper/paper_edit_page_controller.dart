@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
-import '../../../data/model/paper_model.dart';
 import 'package:intl/intl.dart';
+import '../../../data/model/paper_model.dart';
 
 class PaperEditController extends GetxController {
   final editMode = true.obs;
@@ -49,29 +49,35 @@ class PaperEditController extends GetxController {
     this.index.value = index;
     this.uid.value = uid;
     editMode.value = index < 0;
-    comment.value.addListener(() => mode.value = 0);
-    summary.value.addListener(() => mode.value = 1);
+
     if(data != null) {
       paper(data);
       pageStart.value = data.pageStart;
       pageEnd.value = data.pageEnd;
       setAccess(data.access);
       try {
-        if(data.content.summary.isNotEmpty) summary.value.document = Document.fromJson(jsonDecode(data.content.summary));
+        if(data.content.summary.isNotEmpty) {
+          summary(QuillController(document: Document.fromJson(jsonDecode(data.content.summary)), selection: const TextSelection.collapsed(offset: 0)));
+        }
       } catch(e) {
         data.content.summary = data.content.summary.replaceAll('\n', '\\n');
-        if(data.content.summary.isNotEmpty) summary.value.document = Document.fromJson(jsonDecode(data.content.summary));
+        if(data.content.summary.isNotEmpty) {
+          summary(QuillController(document: Document.fromJson(jsonDecode(data.content.summary)), selection: const TextSelection.collapsed(offset: 0)));
+        }
       }
 
       try {
-        if(data.content.comment.isNotEmpty) comment.value.document = Document.fromJson(jsonDecode(data.content.comment));
-      }
-      catch(e) {
+        if(data.content.comment.isNotEmpty) {
+          comment(QuillController(document: Document.fromJson(jsonDecode(data.content.comment)), selection: const TextSelection.collapsed(offset: 0)));
+        }
+      } catch(e) {
         String query = data.content.comment;
         data.content.comment = jsonEncode([{"insert":'$query\n'}]);
-        comment.value.document = Document.fromJson(jsonDecode(data.content.comment));
+        comment(QuillController(document: Document.fromJson(jsonDecode(data.content.comment)), selection: const TextSelection.collapsed(offset: 0)));
       }
 
+      comment.value.addListener(() => mode.value = 0);
+      summary.value.addListener(() => mode.value = 1);
       commentLength.value = comment.value.document.length - 1;
       summaryLength.value = summary.value.document.length - 1;
       paper.refresh();

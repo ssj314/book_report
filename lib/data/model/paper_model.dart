@@ -46,7 +46,6 @@ class PaperContent {
   factory PaperContent.fromJson(Map<String, dynamic> json, Encryptor encrypter) {
     String title = (json["TITLE"] != null)?encrypter.decrypt(json["TITLE"]):"";
     String chapter = (json["CHAPTER"] != null)?encrypter.decrypt(json["CHAPTER"]):"";
-
     String summary = (json["SUMMARY"] != null)?encrypter.decrypt(json["SUMMARY"]):"";
     String comment = (json["COMMENT"] != null)?encrypter.decrypt(json["COMMENT"]):"";
 

@@ -26,10 +26,7 @@ class DefaultFirebaseOptions {
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -60,5 +57,15 @@ class DefaultFirebaseOptions {
     authDomain: 'ehrgnrka-c66a8.firebaseapp.com',
     databaseURL: 'https://ehrgnrka-c66a8-default-rtdb.firebaseio.com',
     storageBucket: 'ehrgnrka-c66a8.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyCqj2bq6n74AXSPeECkOfNDmPiWmRoO3wg',
+    appId: '1:465755278038:ios:1c7b78c586aa6df7ea9777',
+    messagingSenderId: '465755278038',
+    projectId: 'ehrgnrka-c66a8',
+    databaseURL: 'https://ehrgnrka-c66a8-default-rtdb.firebaseio.com',
+    storageBucket: 'ehrgnrka-c66a8.appspot.com',
+    iosBundleId: 'com.example.bookReport',
   );
 }

@@ -23,7 +23,7 @@ class DataController extends GetxController {
       books.refresh();
       return;
     } catch(e) {
-      throw Exception();
+      throw Exception(e);
     }
   }
 

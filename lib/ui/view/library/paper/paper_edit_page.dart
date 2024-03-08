@@ -11,7 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:book_report/data/model/user_access_enum.dart';
 import 'package:book_report/ui/widget/custom_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_quill/flutter_quill.dart';
+import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:get/get.dart';
 
 import '../../../../constant/string.dart';
@@ -201,7 +201,6 @@ class PaperToolBar extends StatelessWidget {
   final controller = Get.find<PaperEditController>();
   final imageController = Get.find<ImageController>();
   final userController = Get.find<UserController>();
-  final qController = Get.find<PaperEditController>();
 
   PaperToolBar({super.key});
 
@@ -259,9 +258,9 @@ class PaperToolBar extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       child: QuillProvider(
                         configurations: QuillConfigurations(
-                          controller: qController.getQuillController()
+                          controller: controller.getQuillController()
                         ),
-                        child: QuillTools().getBottomTool(),
+                        child: QuillTools().getBottomTool()
                       )
                   ))
                 ]
@@ -692,35 +691,36 @@ class PaperCommentEditor extends StatelessWidget {
     final brightness = Get.mediaQuery.platformBrightness;
     return QuillProvider(
         configurations: QuillConfigurations(
-          controller: comment,
-          sharedConfigurations: const QuillSharedConfigurations()
+          controller: comment
         ),
-        child: QuillEditor.basic(
-            scrollController: ScrollController(),
-            configurations: QuillEditorConfigurations(
-                placeholder: "",
-                readOnly: !controller.isEditMode(),
-                scrollable: false,
-                padding: EdgeInsets.zero,
-                autoFocus: false,
-                showCursor: controller.isEditMode(),
-                expands: false,
-                minHeight: controller.isEditMode()?120:null,
-                customStyles: DefaultStyles(
-                    paragraph: DefaultTextBlockStyle(
-                        TextStyle(
-                            color: (brightness == Brightness.light)?Colors.black:Colors.white,
-                            fontSize: CustomFont.body.size,
-                            fontFamily: "LINE"
-                        ),
-                        const VerticalSpacing(0, 0),
-                        const VerticalSpacing(0, 0),
-                        null
-                    )
-                )
-            )
-        )
-    );
+        child: QuillEditor(
+          scrollController: ScrollController(),
+          configurations: QuillEditorConfigurations(
+              enableSelectionToolbar: false,
+              detectWordBoundary: false,
+              placeholder: "",
+              readOnly: !controller.isEditMode(),
+              scrollable: false,
+              padding: EdgeInsets.zero,
+              autoFocus: false,
+              showCursor: controller.isEditMode(),
+              expands: false,
+              minHeight: controller.isEditMode()?120:null,
+              customStyles: DefaultStyles(
+                  paragraph: DefaultTextBlockStyle(
+                      TextStyle(
+                          color: (brightness == Brightness.light)?Colors.black:Colors.white,
+                          fontSize: CustomFont.body.size,
+                          fontFamily: "LINE"
+                      ),
+                      const VerticalSpacing(0, 0),
+                      const VerticalSpacing(0, 0),
+                      null
+                  )
+              )
+          ),
+          focusNode: FocusNode(),
+        ));
   }
 }
 
@@ -773,33 +773,35 @@ class PaperSummaryEditor extends StatelessWidget {
     final brightness = Get.mediaQuery.platformBrightness;
     return QuillProvider(
         configurations: QuillConfigurations(
-        controller: summary,
-        sharedConfigurations: const QuillSharedConfigurations()
-    ), child: QuillEditor.basic(
-      scrollController: ScrollController(),
-        configurations: QuillEditorConfigurations(
-            readOnly: !controller.isEditMode(),
-            placeholder: "",
-            scrollable: true,
-            padding: EdgeInsets.zero,
-            autoFocus: false,
-            showCursor: controller.isEditMode(),
-            enableSelectionToolbar: false,
-            expands: false,
-            minHeight: controller.isEditMode()?180:null,
-            customStyles: DefaultStyles(
-                paragraph: DefaultTextBlockStyle(
-                    TextStyle(
-                        color: (brightness == Brightness.light)?Colors.black:Colors.white,
-                        fontSize: CustomFont.caption.size,
-                        fontFamily: "LINE"
-                    ),
-                    const VerticalSpacing(0, 0),
-                    const VerticalSpacing(0, 0),
-                    null
+          controller: summary,
+        ),
+        child: QuillEditor(
+            focusNode: FocusNode(),
+            scrollController: ScrollController(),
+            configurations: QuillEditorConfigurations(
+                readOnly: !controller.isEditMode(),
+                placeholder: "",
+                scrollable: true,
+                padding: EdgeInsets.zero,
+                autoFocus: false,
+                showCursor: controller.isEditMode(),
+                enableSelectionToolbar: false,
+                expands: false,
+                minHeight: controller.isEditMode()?180:null,
+                customStyles: DefaultStyles(
+                    paragraph: DefaultTextBlockStyle(
+                        TextStyle(
+                            color: (brightness == Brightness.light)?Colors.black:Colors.white,
+                            fontSize: CustomFont.caption.size,
+                            fontFamily: "LINE"
+                        ),
+                        const VerticalSpacing(0, 0),
+                        const VerticalSpacing(0, 0),
+                        null
+                    )
                 )
             )
-        ))
+        )
     );
   }
 }

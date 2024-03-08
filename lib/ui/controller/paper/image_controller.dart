@@ -113,7 +113,6 @@ class ImageController extends GetxController {
         if(file.size > maxSize) {
           return ImageEnum.maxSize;
         } else if(file.bytes == null || file.bytes!.isEmpty){
-            print("here");
             return ImageEnum.broken;
         } else {
           getImagePile().add(ImageAsset(
